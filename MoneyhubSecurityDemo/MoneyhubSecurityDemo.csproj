@@ -1,0 +1,63 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DebugType>portable</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2337" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.7.1" />
+    <PackageReference Include="Autofac" Version="6.3.0" />
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="7.2.0" />
+    <PackageReference Include="Autofac.Extras.CommonServiceLocator" Version="6.0.1" />
+    <PackageReference Include="Refit.HttpClientFactory" Version="6.3.2" />
+    <PackageReference Include="Moneyhub.ApiClient" Version="1.0.1" />
+    <PackageReference Include="ReactiveUI" Version="17.1.50" />
+    <PackageReference Include="ReactiveUI.Fody" Version="17.1.50" />
+    <PackageReference Include="IdentityModel.OidcClient" Version="5.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Views\" />
+    <None Remove="Shell\" />
+    <None Remove="ViewModels\" />
+    <None Remove="Bootstrap\" />
+    <None Remove="Autofac" />
+    <None Remove="Autofac.Extensions.DependencyInjection" />
+    <None Remove="Autofac.Extras.CommonServiceLocator" />
+    <None Remove="Fonts\" />
+    <None Remove="Fonts\MuseoSansRounded300.otf" />
+    <None Remove="Fonts\MuseoSansRounded500.otf" />
+    <None Remove="Fonts\MuseoSansRounded700.otf" />
+    <None Remove="Fonts\MuseoSansRounded900.otf" />
+    <None Remove="Moneyhub.ApiClient" />
+    <None Remove="Refit.HttpClientFactory" />
+    <None Remove="Models\" />
+    <None Remove="ReactiveUI" />
+    <None Remove="ReactiveUI.Fody" />
+    <None Remove="Constants\" />
+    <None Remove="IdentityModel.OidcClient" />
+    <None Remove="Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Views\" />
+    <Folder Include="Shell\" />
+    <Folder Include="ViewModels\" />
+    <Folder Include="Bootstrap\" />
+    <Folder Include="Fonts\" />
+    <Folder Include="Models\" />
+    <Folder Include="Constants\" />
+    <Folder Include="Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Fonts\MuseoSansRounded300.otf" />
+    <EmbeddedResource Include="Fonts\MuseoSansRounded500.otf" />
+    <EmbeddedResource Include="Fonts\MuseoSansRounded700.otf" />
+    <EmbeddedResource Include="Fonts\MuseoSansRounded900.otf" />
+  </ItemGroup>
+</Project>

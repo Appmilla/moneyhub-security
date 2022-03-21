@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Shell.NavBarIsVisible="False"
+    x:Class="MoneyhubSecurityDemo.Views.WelcomeView">
+    <ContentPage.Content>
+
+        <Grid BackgroundColor="#F5F5F5"
+                 Padding="10,10,10,10">
+            <Grid.Margin>
+                    <OnPlatform x:TypeArguments="Thickness">
+                        <On Platform="iOS">0,40,0,0</On>
+                        <On Platform="Android">0,0,0,0</On>
+                    </OnPlatform>
+            </Grid.Margin>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Frame Grid.Row="0" BackgroundColor="White"
+                   Padding="24"
+                   CornerRadius="6"
+                   HasShadow="False">
+
+                <StackLayout>
+
+                    <Image Source="logo"
+                           HeightRequest="100"
+                           WidthRequest="100"/>
+
+                <Label Text="Welcome!"
+                       HorizontalTextAlignment="Center"
+                       TextColor="#085EB5"
+                       FontSize="28"
+                       FontFamily="MediumFontFamily"/>
+
+                </StackLayout>
+
+            </Frame>
+
+            <Button VerticalOptions="Center"
+                    Grid.Row="0"
+                    Grid.RowSpan="2"
+                    TextColor="#085EB5"
+                    Command="{Binding Login}"
+                    Text="Login"/>
+
+        </Grid>
+
+    </ContentPage.Content>
+</ContentPage>
