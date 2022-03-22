@@ -23,7 +23,8 @@ builder.Services.AddAuthentication("Bearer")
     .AddJwtBearer("Bearer", options =>
     {
         //options.Authority = "https://localhost:5001";
-        options.Authority = "https://identityserverhost20220225150440.azurewebsites.net";
+        //options.Authority = "https://identityserverhost20220225150440.azurewebsites.net";
+        options.Authority = "https://identityservertest20220322115258.azurewebsites.net";
 
         options.TokenValidationParameters = new TokenValidationParameters
         {
