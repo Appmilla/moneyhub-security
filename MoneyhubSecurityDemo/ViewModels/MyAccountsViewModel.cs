@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Appmilla.Moneyhub.Refit.Identity;
 using Appmilla.Moneyhub.Refit.OpenFinance;
 using MoneyhubSecurityDemo.Models;
+using MoneyhubSecurityDemo.Services;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 
@@ -16,13 +19,13 @@ namespace MoneyhubSecurityDemo.ViewModels
 
         public ObservableCollection<MyAccount> Accounts { get; set; } = new ObservableCollection<MyAccount>();
 
-        private IAccessToken _accessToken;
+        private readonly IHttpClientFactory _httpFactory;
         private IAccounts _accounts;
 
-        public MyAccountsViewModel(IAccessToken accessToken,
+        public MyAccountsViewModel(IHttpClientFactory httpFactory,
                                    IAccounts accounts)
         {
-            _accessToken = accessToken;
+            _httpFactory = httpFactory;
             _accounts = accounts;
         }
 
@@ -32,9 +35,14 @@ namespace MoneyhubSecurityDemo.ViewModels
             {
                 IsBusy = true;
 
-                var response = await _accessToken.GetAccessToken(new AccessTokenRequest() { GrantType = "client_credentials", Scope = "accounts:read savings_goals:read", Sub = "61ac9b75220d4100a72e17a2" });
+                var _httpClient = _httpFactory.CreateClient();
 
-                var accountsResponse = await _accounts.AccountsGetAllAsync(null, null, response.bearer_token);
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", SecureStorage.AccessToken ?? string.Empty);
+
+                HttpResponseMessage response = await _httpClient.GetAsync($"{Constants.ApiUri}moneyhubaccess");
+                string content = await response.Content.ReadAsStringAsync();
+
+                var accountsResponse = await _accounts.AccountsGetAllAsync(null, null, "Bearer " + content);
 
                 await Task.Delay(1500);
 

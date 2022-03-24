@@ -14,20 +14,16 @@ namespace Moneyhub.Auth.Controllers
     [Route("[controller]")]
     public class MoneyhubAccessController : ControllerBase
     {
-        private readonly IHttpClientFactory _httpFactory;
-        private readonly ILogger<MoneyhubAccessController> _logger;
         private readonly IAccessToken _accessToken;
 
-        public MoneyhubAccessController(IHttpClientFactory httpFactory, ILogger<MoneyhubAccessController> logger, IAccessToken accessToken)
+        public MoneyhubAccessController(IAccessToken accessToken)
         {
-            _httpFactory = httpFactory;
-            _logger = logger;
             _accessToken = accessToken;
         }
 
         [Authorize]
         [HttpGet(Name = "GetAccessToken")]
-        public async Task<ActionResult<TokenResponse>> Get()
+        public async Task<ActionResult<AccessTokenResponse>> Get()
         {
             AccessTokenResponse? accessTokenResponse = null;
             try
@@ -38,7 +34,7 @@ namespace Moneyhub.Auth.Controllers
             {
                 return new BadRequestObjectResult("Error: " + e.Message);
             }
-            return new OkObjectResult(accessTokenResponse?.access_token);
+            return new OkObjectResult(accessTokenResponse);
         }
     }
 }
