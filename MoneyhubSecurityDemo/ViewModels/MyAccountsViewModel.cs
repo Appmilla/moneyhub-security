@@ -7,6 +7,7 @@ using Appmilla.Moneyhub.Refit.Identity;
 using Appmilla.Moneyhub.Refit.OpenFinance;
 using MoneyhubSecurityDemo.Models;
 using MoneyhubSecurityDemo.Services;
+using Newtonsoft.Json;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 
@@ -40,22 +41,25 @@ namespace MoneyhubSecurityDemo.ViewModels
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", SecureStorage.AccessToken ?? string.Empty);
 
                 HttpResponseMessage response = await _httpClient.GetAsync($"{Constants.ApiUri}moneyhubaccess");
-                string content = await response.Content.ReadAsStringAsync();
 
-                var accountsResponse = await _accounts.AccountsGetAllAsync(null, null, "Bearer " + content);
+                string jsonAccessTokenResponse = await response.Content.ReadAsStringAsync();
 
-                await Task.Delay(1500);
+                var accessTokenResponse = JsonConvert.DeserializeObject<AccessTokenResponse>(jsonAccessTokenResponse);
+
+                var accountsResponse = await _accounts.AccountsGetAllAsync(null, null, accessTokenResponse.bearer_token);
 
                 foreach (var data in accountsResponse.Data)
                 {
                     Accounts.Add(new MyAccount() { Account = data });
                 }
-
-                IsBusy = false;
             }
-            catch (Exception ex)
+            catch
             {
-
+                // An error has occured
+            }
+            finally
+            {
+                IsBusy = false;
             }
         }
     }
